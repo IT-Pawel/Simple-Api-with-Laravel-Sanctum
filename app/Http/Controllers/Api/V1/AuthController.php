@@ -11,21 +11,19 @@ use App\Http\Requests\AuthUserRequest;
 
 class AuthController extends Controller
 {
-    use HttpResponses;
-
     public function auth(AuthUserRequest $request)
     {
         $request->validated($request->all());
 
-        if(!Auth::attempt($request->only(['email','password']))){
-            return $this->error("","Dane nie pasują", 401);
+        if (!Auth::attempt($request->only(['email', 'password']))) {
+            return $this->error([], "Bad credentials", 400);
         }
 
         $user = User::where('email', $request->email)->first();
 
         return $this->success([
             'user' => $user,
-            'token'=> $user->createToken('Api Token of ' . $user->name)->plainTextToken
+            'token' => $user->createToken('Api Token of ' . $user->name)->plainTextToken
         ]);
     }
 }

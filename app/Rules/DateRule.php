@@ -2,11 +2,11 @@
 
 namespace App\Rules;
 
-use App\Enum\Currency;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Carbon;
 
-class SprawdzanieWaluty implements ValidationRule
+class DateRule implements ValidationRule
 {
     /**
      * Run the validation rule.
@@ -15,8 +15,8 @@ class SprawdzanieWaluty implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if(!in_array($value, Currency::getAllValues())) {
-            $fail('Zły format :attribute');
+        if (Carbon::createFromFormat('Y-m-d', $value) >Carbon::createFromFormat('Y-m-d', now()->toDateString())) {
+            $fail('Date can\' be futhure');
         }
     }
 }

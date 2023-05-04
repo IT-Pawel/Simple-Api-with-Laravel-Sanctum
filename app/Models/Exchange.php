@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Database\Factories\KursFactory;
+use Database\Factories\ExchangeFactory;
 
-class Kurs extends Model
+class Exchange extends Model
 {
     use HasFactory;
 
-    protected $table = 'kursy';
+    protected $table = 'exchanges';
 
     protected $fillable = [
         'currency',
@@ -20,7 +20,6 @@ class Kurs extends Model
 
     public static function factory()
     {
-        return KursFactory::new();
+        return ExchangeFactory::new();
     }
-
 }

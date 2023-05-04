@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Enum\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Enum\Currency;
 use Illuminate\Support\Carbon;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Exchange>
  */
-class KursFactory extends Factory
+class ExchangeFactory extends Factory
 {
     /**
      * Define the model's default state.

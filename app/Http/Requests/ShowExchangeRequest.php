@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\SprawdzanieDaty;
-use App\Rules\SprawdzanieWaluty;
+use App\Rules\CurrencyRule;
+use App\Rules\DateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DodajKursRequest extends FormRequest
+class ShowExchangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class DodajKursRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency' => ['required', new SprawdzanieWaluty],
-            'date' => ['required','date', new SprawdzanieDaty],
-            'amount' => ['required']
+            'currency' => [ new CurrencyRule],
+            'date' => ['required','date', new DateRule],
         ];
     }
 }

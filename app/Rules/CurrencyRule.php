@@ -4,8 +4,9 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use App\Enum\Currency;
 
-class SprawdzanieDaty implements ValidationRule
+class CurrencyRule implements ValidationRule
 {
     /**
      * Run the validation rule.
@@ -14,8 +15,8 @@ class SprawdzanieDaty implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (date("Y-m-d", strtotime($value)) > date("Y-m-d")) {
-            $fail('Data nie może być przyszłością');
+        if(!in_array($value, Currency::getAllValues())) {
+            $fail('Bad :attribute');
         }
     }
 }

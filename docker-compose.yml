@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+    kgr-app:
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        image: app:1.0
+        container_name: kgr-app
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/kgr
+            - ./docker/php/conf.d:/usr/local/etc/php/conf.d
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        networks:
+            - kgr
+    kgr-db:
+        image: mariadb:10.3
+        container_name: kgr-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: database
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_PASSWORD: password
+            MYSQL_USER: database
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mariadb/conf.d:/etc/mysql/conf.d
+            - ./docker/mariadb/dump:/docker-dump
+        networks:
+            - kgr
+    kgr-nginx:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        image: nginx:1.0
+        container_name: kgr-nginx
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./:/var/www/app
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d/
+            - ./docker/nginx/data:/etc/nginx/data/
+        networks:
+            - kgr
+    kgr-redis:
+        image: redis:6.2
+        container_name: kgr-redis
+        networks:
+            - kgr
+
+networks:
+    kgr:
+        driver: bridge

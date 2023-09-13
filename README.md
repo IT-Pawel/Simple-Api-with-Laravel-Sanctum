@@ -1,58 +1,62 @@
+# Currency Exchange Rates API
 
-# Kursy walut API
-Podstawowe api dla kursów walut w USD, EUR, GBP.
+This is a basic API for currency exchange rates, providing rates for USD, EUR, and GBP. You can test this API using [Postman](https://www.postman.com).
 
-Narzędzia użyte do testowania to [Postman](https://www.postman.com).
+## Installation
 
+To run this API, you will need:
 
+- Docker
 
-## Instalacja
+Start Docker containers:
 
-Uruchomienie wymaga:
-- docker
-
-Odpalenie dockera
 ```bash
-  docker-compose up
+docker-compose up
 ```
 
-Seedowanie bazy danych
+Seed the database:
+
 ```bash
-  docker exec -ti kgr-app bash
-  php artisan db:seed
+docker exec -ti kgr-app bash
+php artisan db:seed
 ```
-    
-## API
 
-#### Logowanie/autoryzacji/uzyskania tokenu
+## API Endpoints
+
+### Authentication/Token Generation
 
 ```http
-  POST {url}/api/v1/auth
+POST {url}/api/v1/auth
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `email`      | `string` | **Required**. Email |
-| `password`      | `string` | **Required**. Hasło |
+| Parameter  | Type     | Description           |
+| :--------- | :------- | :-------------------- |
+| `email`    | `string` | **Required**. Email   |
+| `password` | `string` | **Required**. Password|
 
-#### Dodanie kursu
+### Add Exchange Rate
 
 ```http
-  POST {url}/api/v1/dodajKurs
+POST {url}/api/v1/dodajKurs
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `currency` | `enum` | **Required**. Waluta |
-| `date` | `string` | **Required**. Data kursu|
-| `amount` | `string` | **Required**. Wartość |
 
-#### Pobieranie kursów na podstawie daty oraz daty i waluty
+| Parameter  | Type     | Description              |
+| :--------- | :------- | :----------------------- |
+| `currency` | `enum`   | **Required**. Currency   |
+| `date`     | `string` | **Required**. Date       |
+| `amount`   | `string` | **Required**. Amount     |
+
+### Retrieve Exchange Rates
 
 ```http
-  GET /api/v1/pobierzKursy?date={date}&currency={currency}
+GET /api/v1/pobierzKursy?date={date}&currency={currency}
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `date` | `string` | **Required**. Data kursu |
-| `currency` | `enum` | Waluta |
 
+| Parameter  | Type     | Description              |
+| :--------- | :------- | :----------------------- |
+| `date`     | `string` | **Required**. Date       |
+| `currency` | `enum`   | Currency (optional)      |
+
+Please note that all API requests must be authenticated using the token obtained from the `/api/v1/auth` endpoint.
+
+Feel free to replace `{url}` with the actual URL where the API is hosted.

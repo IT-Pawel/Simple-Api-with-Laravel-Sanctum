@@ -26,7 +26,7 @@ php artisan db:seed
 ### Authentication/Token Generation
 
 ```http
-POST {url}/api/v1/auth
+POST /api/v1/auth
 ```
 
 | Parameter  | Type     | Description           |
@@ -37,7 +37,7 @@ POST {url}/api/v1/auth
 ### Add Exchange Rate
 
 ```http
-POST {url}/api/v1/dodajKurs
+POST /api/v1/dodajKurs
 ```
 
 | Parameter  | Type     | Description              |
